@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual image if available
-import emergencyImg from "../img/emergencymedicine.webp";
+
 
 const emergencyFaculty = [
   {
@@ -14,7 +14,7 @@ const emergencyFaculty = [
     qualification: "MBBS, MD (Emergency Medicine)",
     phone: "9876543210",
     email: "emergency1@bcmch.edu.in",
-    image: emergencyImg,
+    image: null,
   },
   {
     id: 2,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual image if available
-import dermImg from "../img/dermatologist.jpeg";
+
 
 const dermatologyFaculty = [
   {
@@ -14,8 +14,8 @@ const dermatologyFaculty = [
     qualification: "MBBS, MD (Dermatology)",
     phone: "9876543210",
     email: "derma1@bcmch.edu.in",
-    image: dermImg,
   },
+    
   {
     id: 2,
     name: "Dr. Anitha George",

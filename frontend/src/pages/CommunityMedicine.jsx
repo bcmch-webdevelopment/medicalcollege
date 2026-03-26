@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual images if available
-import communityImg from "../img/communitymedicine.jpg";
+
 
 const communityFaculty = [
   {
@@ -14,7 +14,7 @@ const communityFaculty = [
     qualification: "MBBS, MD (Community Medicine)",
     phone: "9876543210",
     email: "community1@bcmch.edu.in",
-    image: communityImg,
+    image: null,
   },
   {
     id: 2,

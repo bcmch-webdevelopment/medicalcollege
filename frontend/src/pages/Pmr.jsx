@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual image if available
-import pmrImg from "../img/pmr.webp";
+
 
 const pmrFaculty = [
   {
@@ -14,7 +14,7 @@ const pmrFaculty = [
     qualification: "MBBS, MD (PMR)",
     phone: "9876543210",
     email: "pmr1@bcmch.edu.in",
-    image: pmrImg,
+    image: null,
   },
   {
     id: 2,

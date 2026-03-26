@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual image if available
-import pediatricsImg from "../img/pediatrics.jpg";
+
 
 const pediatricsFaculty = [
   {
@@ -14,7 +14,7 @@ const pediatricsFaculty = [
     qualification: "MBBS, MD (Pediatrics)",
     phone: "9876543210",
     email: "pediatrics1@bcmch.edu.in",
-    image: pediatricsImg,
+    image: null,
   },
   {
     id: 2,
