@@ -119,9 +119,13 @@ const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
    const navigate = useNavigate();   
 
-    const handleClick = () => {       
-    navigate("/pre-clinic");
+   
+
+  // Handle department card click
+  const handleClick = (path) => {
+    navigate(path);
   };
+
   // Auto-cycle through the hero images
   useEffect(() => {
     const timer = setInterval(() => {
@@ -246,59 +250,62 @@ const Home = () => {
                 Discover our comprehensive range of specialized medical departments, staffed by expert faculty dedicated to nurturing the next generation of healthcare professionals.
               </p>
             </div>
-            <Link to="#" className="hidden md:inline-block text-[#b71a22] font-bold hover:underline mb-2">View All Departments &rarr;</Link>
+            <button
+               onClick={() => navigate("/departments")}
+               className="hidden md:inline-block text-[#b71a22] font-bold hover:underline mb-2"
+            >
+                        View All Departments →
+            </button>       
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-              <div
-                onClick={handleClick}
-                className="cursor-pointer bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group"
-              >
-              <div className="w-14 h-14 bg-red-50 text-[#b71a22] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#b71a22] group-hover:text-white transition-colors duration-300">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-              </div>
+            <div
+              onClick={() => handleClick("/pre-clinic")}
+              className="cursor-pointer bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group"
+            >
               <h3 className="text-xl font-bold text-gray-800 mb-4">Pre-Clinical</h3>
-              <ul className="space-y-2 text-gray-600 font-medium">
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Anatomy</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Physiology</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Biochemistry</li>
-                
+              <ul className="list-disc list-inside text-gray-600 space-y-2">
+                <li>Anatomy</li>
+                <li>Physiology</li>
+                <li>Biochemistry</li>
               </ul>
+    
             </div>
-              
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group">
-              <div className="w-14 h-14 bg-red-50 text-[#b71a22] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#b71a22] group-hover:text-white transition-colors duration-300">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-              </div>
+
+            <div
+              onClick={() => handleClick("/para-clinic")}
+              className="cursor-pointer bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group"
+            >
               <h3 className="text-xl font-bold text-gray-800 mb-4">Para-Clinical</h3>
-              <ul className="space-y-2 text-gray-600 font-medium">
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Pathology</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Microbiology</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Pharmacology</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Forensic Medicine</li>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                <li>Pathology</li>
+                <li>Microbiology</li>
+                <li>Pharmacology</li>
+                <li>Community Medicine</li>
+                <li>Forensic Medicine</li>
               </ul>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group">
-              <div className="w-14 h-14 bg-red-50 text-[#b71a22] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#b71a22] group-hover:text-white transition-colors duration-300">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-              </div>
+            <div
+              onClick={() => handleClick("/clinical")}
+              className="cursor-pointer bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition transform hover:-translate-y-1 group"
+            >
               <h3 className="text-xl font-bold text-gray-800 mb-4">Clinical</h3>
-              <ul className="space-y-2 text-gray-600 font-medium">
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> General Medicine</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> General Surgery</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Pediatrics & Orthopedics</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 bg-[#b71a22] rounded-full mr-2"></span> Obstetrics & Gynecology</li>
-              </ul>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                  <li>Anaesthesiology</li>
+                  <li>Dentistry</li>
+                  <li>Emergency Medicine</li>
+                  <li>General Medicine</li>
+                  <li>General Surgery</li>
+                  <li>Ophthalmology</li>
+                  <li> Orthopedics</li>
+                  <li>Oto Rhinolaryngology</li>
+                  <li>Pediatrics</li>
+                  <li> PMR</li>
+                  <li>Obstetrics & Gynecology</li>
+                </ul>
             </div>
-
           </div>
-
-          <div className="mt-8 text-center md:hidden">
-            <Link to="#" className="text-[#b71a22] font-bold hover:underline">View All Departments &rarr;</Link>
-          </div>
-
         </div>
       </section>
 

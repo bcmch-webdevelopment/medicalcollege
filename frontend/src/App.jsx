@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import VirtualTour from './pages/VirtualTour';
+
 // About Us Pages
 import History from './pages/History';
 import VisionMission from './pages/VisionMission';
@@ -18,6 +19,28 @@ import PreClinic from './pages/PreClinic';
 import Anatomy from './pages/AnatomyProfile';
 import Physiology from './pages/Physiology';
 import Biochemistry from './pages/BioChemistry';
+import ParaClinic from './pages/ParaClinic';
+import Clinical from './pages/Clinic';
+import Pathology from './pages/pathology';
+import Microbiology from './pages/Microbiology';
+import Pharmacology from './pages/pharmacology';
+import ForensicMedicine from './pages/Forensicmedicine';
+import GeneralMedicine from './pages/GeneralMedicine';
+import GeneralSurgery from './pages/GeneralSurgery';
+import ObstetricsGynaecology from './pages/ObstetricsGynecology';
+import Orthopedics from './pages/Orthopedics';
+import Anesthesia from './pages/Anesthesia';
+import CommunityMedicine from './pages/CommunityMedicine';
+import Dentistry from './pages/Dentistry';
+import EmergencyMedicine from './pages/EmergencyMedicine';
+import Ophthalmology from './pages/Ophthalmomgy';
+import OtoRhinolaryngology from './pages/OtoRhinolaryngology';
+import Dermatology from './pages/Dermatology';
+import PMR from './pages/Pmr';
+import Pediatrics from './pages/Pediatrics';
+import Department from './pages/Departments';
+
+
 
 function App() {
   return (
@@ -41,6 +64,28 @@ function App() {
         <Route path="/anatomy" element={<Anatomy />} />
         <Route path="/physiology" element={<Physiology />} />
         <Route path="biochemistry" element={<Biochemistry />} />
+        <Route path="/para-clinic" element={<ParaClinic />} />
+        <Route path="/clinical" element={<Clinical />} />
+        <Route path="/pathology" element={<Pathology />} />
+        <Route path="/pharmacology" element={<Pharmacology />} />
+        <Route path="microbiology" element={<Microbiology />} />
+        <Route path="/forensic-medicine" element={<ForensicMedicine />} />
+        <Route path="/general-medicine" element={<GeneralMedicine />} />
+        <Route path="/general-surgery" element={<GeneralSurgery />} />
+        <Route path="/orthopedics" element={<Orthopedics />} />
+        <Route path="/obstetrics-gynecology" element={<ObstetricsGynaecology />} />
+        <Route path="/anaesthesiology" element={<Anesthesia />} />
+        <Route path="/community-medicine" element={<CommunityMedicine />} />
+        <Route path="/dentistry" element={<Dentistry />} />
+        <Route path="/emergency-medicine" element={<EmergencyMedicine />} />
+        <Route path="/ophthalmology" element={<Ophthalmology />} />
+        <Route path="/oto-rhinolaryngology" element={<OtoRhinolaryngology />} />
+        <Route path="/dermatology" element={<Dermatology />} />
+        <Route path="/pmr" element={<PMR />} />
+        <Route path="/pediatrics" element={<Pediatrics />} />
+        <Route path="/departments" element={<Department />} />
+        
+        
 
       </Routes>
       <Footer />

@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import TeachingFaulty from '../components/TeachingFaulty'
-import sumathomasImg from '../img/sumathomas.jpg'
+import TeachingFaulty from "../components/TeachingFaulty";
 
-const anatomyFaculty = [
+// Replace with actual department images if available
+import medicineImg from "../img/sumathomas.jpg";
+
+const generalMedicineFaculty = [
   {
     id: 1,
     name: "Dr. Suma Thomas",
     role: "Professor",
-    empId: "EMP001",
-    nmc: "NMC001",
-    qualification: "MBBS, MD",
+    empId: "EMP501",
+    nmc: "NMC501",
+    qualification: "MBBS, MD (General Medicine)",
     phone: "9876543210",
-    email: "suma@bcmch.edu.in",
-    image: sumathomasImg,
+    email: "medicine1@bcmch.edu.in",
+    image: medicineImg,
   },
   {
     id: 2,
     name: "Dr. Vijayamma K N",
     role: "Professor",
-    empId: "EMP002",
-    nmc: "NMC002",
+    empId: "EMP502",
+    nmc: "NMC502",
     qualification: "MBBS, MD",
     phone: "9876543211",
-    email: "vijayamma@bcmch.edu.in",
+    email: "medicine2@bcmch.edu.in",
     image: null,
   },
   { id: 3, name: "Dr. Meril Ann Soman", role: "Professor" },
@@ -35,7 +37,7 @@ const anatomyFaculty = [
   { id: 10, name: "Dr Anjusha P", role: "Tutor" },
 ];
 
-const Anatomy = () => {
+const GeneralMedicine = () => {
   const [showIntro, setShowIntro] = useState(false);
   const [showActivities, setShowActivities] = useState(false);
 
@@ -44,26 +46,34 @@ const Anatomy = () => {
       {/* HEADER */}
       <div className="bg-gradient-to-r from-[#b71a22] to-red-700 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-3">Anatomy</h1>
-          <p className="text-lg opacity-90">Department of Anatomy – Foundation of Medical Education</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
+            General Medicine
+          </h1>
+          <p className="text-lg opacity-90">
+            Department of General Medicine – Comprehensive Patient Care & Clinical Practice
+          </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto py-16 px-4">
         {/* INTRODUCTION */}
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-12">
-          <h2 className="text-3xl font-bold text-[#b71a22] mb-4">Introduction</h2>
+          <h2 className="text-3xl font-bold text-[#b71a22] mb-4">
+            Introduction
+          </h2>
+
           <p className="text-gray-700 leading-relaxed text-lg">
-            The Department of Anatomy serves as the foundational pillar of medical education,
-            providing students with a comprehensive understanding of the structure and organization
-            of the human body.
+            The Department of General Medicine is responsible for diagnosing,
+            treating, and managing a wide range of adult diseases.
           </p>
+
           {showIntro && (
             <p className="text-gray-700 leading-relaxed text-lg mt-4">
-              The department is committed to academic excellence and plays a crucial role in shaping
-              the knowledge base of future healthcare professionals.
+              It forms the backbone of clinical practice by integrating medical knowledge,
+              patient care, and evidence-based treatment approaches.
             </p>
           )}
+
           <button
             onClick={() => setShowIntro(!showIntro)}
             className="mt-4 text-[#b71a22] font-semibold hover:underline"
@@ -72,31 +82,38 @@ const Anatomy = () => {
           </button>
         </div>
 
-        {/* TEACHING FACULTY (Reusable Component) */}
-        <TeachingFaulty faculty={anatomyFaculty} />
+        {/* TEACHING FACULTY */}
+        <TeachingFaulty faculty={generalMedicineFaculty} />
 
         {/* DEPARTMENT ACTIVITIES */}
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-          <h2 className="text-3xl font-bold text-[#b71a22] mb-6">Department Activities</h2>
+          <h2 className="text-3xl font-bold text-[#b71a22] mb-6">
+            Department Activities
+          </h2>
+
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            ONÓIR – Cadaveric Oath Taking Ceremony (MBBS 2024)
+            Clinical Rounds & Patient Care Training
           </h3>
+
           <p className="text-gray-700 leading-relaxed text-lg">
-            ONÓIR, meaning "to honour", marks the transition of students into practical medical learning.
+            The department provides extensive clinical exposure in wards, outpatient clinics,
+            and emergency care settings.
           </p>
+
           {showActivities && (
             <div className="text-gray-700 leading-relaxed text-lg space-y-4 mt-4">
               <p>
-                The cadavers were once living individuals who selflessly donated their bodies for the advancement of medical education.
+                Students participate in daily ward rounds and case discussions.
               </p>
               <p>
-                These donors must be treated with dignity and respect, as they serve as both the students’ first patients and their silent teachers.
+                Training is provided in diagnosis, treatment planning, and patient management.
               </p>
               <p>
-                This experience instills ethical values, responsibility, and respect in future doctors.
+                The department emphasizes clinical reasoning and evidence-based medicine.
               </p>
             </div>
           )}
+
           <button
             onClick={() => setShowActivities(!showActivities)}
             className="mt-4 text-[#b71a22] font-semibold hover:underline"
@@ -109,4 +126,4 @@ const Anatomy = () => {
   );
 };
 
-export default Anatomy;
+export default GeneralMedicine;
