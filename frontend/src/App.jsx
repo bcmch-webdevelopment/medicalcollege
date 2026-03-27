@@ -5,25 +5,25 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 
 // Pages
-import Home from './pages/Home.jsx';
-import VirtualTour from './pages/VirtualTour.jsx';
+import Home from './src/pages/Home.jsx';
+import VirtualTour from './src/pages/VirtualTour.jsx';
 
 // About Us Pages
-import History from './pages/History.jsx';
-import VisionMission from './pages/VisionMission.jsx';
-import MetropolitanMessage from './pages/MetropolitanMessage.jsx';
-import PrincipalMessage from './pages/PrincipalMessage.jsx';
-import AdminTeam from './pages/AdminTeam.jsx';
-import Affiliation from './pages/Affiliation.jsx';
-import Infrastructure from './pages/Infrastructure.jsx';
-import CitizenCharter from './pages/CitizenCharter.jsx';
-import Contact from './pages/Contact.jsx';
+import History from './src/pages/History.jsx';
+import VisionMission from './src/pages/VisionMission.jsx';
+import MetropolitanMessage from './src/pages/MetropolitanMessage.jsx';
+import PrincipalMessage from './src/pages/PrincipalMessage.jsx';
+import AdminTeam from './src/pages/AdminTeam.jsx';
+import Affiliation from './src/pages/Affiliation.jsx';
+import Infrastructure from './src/pages/Infrastructure.jsx';
+import CitizenCharter from './src/pages/CitizenCharter.jsx';
+import Contact from './src/pages/Contact.jsx';
 
 // Pre-Clinic
-import PreClinic from './pages/PreClinic.jsx';
-import Anatomy from './pages/AnatomyProfile.jsx';
-import Physiology from './pages/Physiology.jsx';
-import Biochemistry from './pages/BioChemistry.jsx';
+import PreClinic from './src/pages/PreClinic.jsx';
+import Anatomy from './src/pages/AnatomyProfile.jsx';
+import Physiology from './src/pages/Physiology.jsx';
+import Biochemistry from './src/pages/BioChemistry.jsx';
 
 // Para-Clinic / Clinical Base
 import ParaClinic from './pages/ParaClinic.jsx';
@@ -34,21 +34,21 @@ import Pharmacology from './pages/Pharmacology.jsx'
 import ForensicMedicine from './pages/Forensicmedicine.jsx';
 
 // Clinical Departments
-import GeneralMedicine from './pages/GeneralMedicine.jsx';
-import GeneralSurgery from './pages/GeneralSurgery.jsx';
-import ObstetricsGynaecology from './pages/ObstetricsGynecology.jsx';
-import Orthopedics from './pages/Orthopedics.jsx';
-import Anesthesia from './pages/Anesthesia.jsx';
-import CommunityMedicine from './pages/CommunityMedicine.jsx';
-import Dentistry from './pages/Dentistry.jsx';
-import EmergencyMedicine from './pages/EmergencyMedicine.jsx';
-import Ophthalmology from './pages/Ophthalmology.jsx';
-import OtoRhinolaryngology from './pages/OtoRhinolaryngology.jsx';
-import Dermatology from './pages/Dermatology.jsx';
-import PMR from './pages/Pmr.jsx';
-import Pediatrics from './pages/Pediatrics.jsx';
+import GeneralMedicine from './src/pages/GeneralMedicine.jsx';
+import GeneralSurgery from './src/pages/GeneralSurgery.jsx';
+import ObstetricsGynaecology from './src/pages/ObstetricsGynecology.jsx';
+import Orthopedics from './src/pages/Orthopedics.jsx';
+import Anesthesia from './src/pages/Anesthesia.jsx';
+import CommunityMedicine from './src/pages/CommunityMedicine.jsx';
+import Dentistry from './src/pages/Dentistry.jsx';
+import EmergencyMedicine from './src/pages/EmergencyMedicine.jsx';
+import Ophthalmology from './src/pages/Ophthalmology.jsx';
+import OtoRhinolaryngology from './src/pages/OtoRhinolaryngology.jsx';
+import Dermatology from './src/pages/Dermatology.jsx';
+import PMR from './src/pages/Pmr.jsx';
+import Pediatrics from './src/pages/Pediatrics.jsx';
 
-import Department from './pages/Departments.jsx';
+import Department from './src/pages/Departments.jsx';
 
 function App() {
   return (
