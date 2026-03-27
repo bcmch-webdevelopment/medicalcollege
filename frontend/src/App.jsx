@@ -30,7 +30,7 @@ import ParaClinic from './pages/ParaClinic';
 import Clinical from './pages/Clinic';
 import Pathology from './pages/Pathology';
 import Microbiology from './pages/Microbiology';
-import Pharmacology from './pages/Pharmacology.jsx'
+// import Pharmacology from './pages/Pharmacology.jsx'
 import ForensicMedicine from './pages/ForensicMedicine';
 
 // Clinical Departments
@@ -80,7 +80,7 @@ function App() {
         <Route path="/para-clinic" element={<ParaClinic />} />
         <Route path="/pathology" element={<Pathology />} />
         <Route path="/microbiology" element={<Microbiology />} />
-        <Route path="/pharmacology" element={<Pharmacology />} />
+        {/* <Route path="/pharmacology" element={<Pharmacology />} /> */}
         <Route path="/forensic-medicine" element={<ForensicMedicine />} />
 
         {/* Clinical */}
