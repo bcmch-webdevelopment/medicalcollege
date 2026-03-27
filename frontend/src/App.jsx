@@ -30,7 +30,7 @@ import ParaClinic from './pages/ParaClinic';
 import Clinical from './pages/Clinic';
 import Pathology from './pages/Pathology';
 import Microbiology from './pages/Microbiology';
-import Pharmacology from './pages/Pharmacology'
+import Pharmacology from './pages/Pharmacology.jsx'
 import ForensicMedicine from './pages/ForensicMedicine';
 
 // Clinical Departments
