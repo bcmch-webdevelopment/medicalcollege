@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import anatomyImg from "../img/anatomy.webp";
-import physiologyImg from "../img/Physiology.webp";
+import physiologyImg from "../img/physiology.webp";
 import bioChemistryImg from "../img/biochemistry.jpg";
 
 const subjects = [
