@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TeachingFaulty from "../components/TeachingFaulty";
 
 // Replace with actual pharmacology images if available
-import pharmacologyImg from "../img/sumathomas.jpg";
+import sumathomasImg from "../img/sumathomas.jpg";
 
 const pharmacologyFaculty = [
   {
@@ -14,7 +14,7 @@ const pharmacologyFaculty = [
     qualification: "MBBS, MD (Pharmacology)",
     phone: "9876543210",
     email: "pharma1@bcmch.edu.in",
-    image: pharmacologyImg,
+    image: sumathomasImg,
   },
   {
     id: 2,
