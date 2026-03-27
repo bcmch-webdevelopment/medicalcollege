@@ -21,7 +21,7 @@ import Contact from './pages/Contact';
 
 // Pre-Clinic
 import PreClinic from './pages/PreClinic';
-import Anatomy from './pages/AnatomyProfile';
+import Anatomy from './pages/Anesthesia';
 import Physiology from './pages/Physiology';
 import Biochemistry from './pages/BioChemistry';
 
