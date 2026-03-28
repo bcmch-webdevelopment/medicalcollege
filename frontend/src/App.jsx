@@ -13,12 +13,14 @@ import History from './pages/History';
 import VisionMission from './pages/VisionMission';
 import MetropolitanMessage from './pages/MetropolitanMessage';
 import PrincipalMessage from './pages/PrincipalMessage';
-import AdminTeam from './pages/AdminTeam';
-import Affiliation from './pages/Affiliation';
-import Infrastructure from './pages/Infrastructure';
-import CitizenCharter from './pages/CitizenCharter';
-import Contact from './pages/Contact';
 
+// import Affiliation from './pages/Affiliation';
+import Infrastructure from './pages/Infrastructure';
+// import CitizenCharter from './pages/CitizenCharter';
+// import Contact from './pages/Contact';
+
+// Academics page
+import Academics from './components/Academics'
 // Pre-Clinic
 import PreClinic from './pages/PreClinic';
 import Anatomy from './pages/Anesthesia';
@@ -64,12 +66,14 @@ function App() {
         <Route path="/vision-mission" element={<VisionMission />} />
         <Route path="/metropolitan" element={<MetropolitanMessage />} />
         <Route path="/principal" element={<PrincipalMessage />} />
-        <Route path="/admin-team" element={<AdminTeam />} />
-        <Route path="/affiliation" element={<Affiliation />} />
+        {/* <Route path="/admin-team" element={<AdminTeam />} /> */}
+        {/* <Route path="/affiliation" element={<Affiliation />} /> */}
         <Route path="/infrastructure" element={<Infrastructure />} />
-        <Route path="/citizen-charter" element={<CitizenCharter />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/citizen-charter" element={<CitizenCharter />} /> */}
+        {/* <Route path="/contact" element={<Contact />} /> */}
 
+        {/* Academics*/}
+           <Route path="/academics" element={<Academics />} />
         {/* Pre-Clinic */}
         <Route path="/pre-clinic" element={<PreClinic />} />
         <Route path="/anatomy" element={<Anatomy />} />
