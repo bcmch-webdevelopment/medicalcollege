@@ -7,7 +7,7 @@ const AcademicsMenu = () => {
   const [submenu, setSubmenu] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Hardcoded Menu Data (inside component)
+  //   Menu Data 
   const menuData = [
     {
       title: "Attendance",

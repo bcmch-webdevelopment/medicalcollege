@@ -2,42 +2,27 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
-const AboutUsMenu = () => {
+const NewsMenu = () => {
   const [open, setOpen] = useState(false);
   const [submenu, setSubmenu] = useState("");
   const navigate = useNavigate();
 
-  //  About Us Menu Data
+  // ✅ NMC Menu Data
   const menuData = [
+   
     {
-      title: "About College",
-      key: "about-college",
+      title: "News & Events",
+      key: "nmc-info",
       children: [
-        { label: "History", path: "/history" },
-        { label: "Vision & Mission", path: "/about/vision-mission" },
+        { label: "News", path: "/news" },
+        { label: "Events", path: "/events" },
+        
       ],
     },
     {
-      title: "Administration",
-      key: "administration",
-      children: [
-        { label: "Metropolitan Message", path: "/about/metropolitan-message" },
-        { label: "Principal Message", path: "/about/principal-message" },
-        { label: "Admin Team", path: "/about/admin-team" },
-      ],
-    },
-    {
-      title: "Infrastructure",
-      path: "/about/infrastructure",
-    },
-    {
-      title: "Affiliation & Recognition",
-      path: "/about/affiliation",
-    },
-    {
-      title: "Hospital",
-      path: "/about/hospital",
-    },
+      title: "College Newsletter",
+      path: "/newsletter",
+    }
   ];
 
   return (
@@ -51,7 +36,7 @@ const AboutUsMenu = () => {
     >
       {/* Main Button */}
       <button className="px-4 py-2 uppercase hover:text-red-700">
-        About Us
+        News & Events
       </button>
 
       {/* Dropdown */}
@@ -60,7 +45,7 @@ const AboutUsMenu = () => {
 
           {menuData.map((item, index) => (
             <div key={index}>
-              
+
               {/* With Submenu */}
               {item.children ? (
                 <div
@@ -75,7 +60,7 @@ const AboutUsMenu = () => {
 
                   {/* Submenu */}
                   {submenu === item.key && (
-                    <div className="absolute top-0 left-full bg-white shadow-lg w-56 border">
+                    <div className="absolute top-0 left-full bg-white shadow-lg w-72 border">
                       {item.children.map((sub, i) => (
                         <div
                           key={i}
@@ -107,4 +92,4 @@ const AboutUsMenu = () => {
   );
 };
 
-export default AboutUsMenu;
+export default NewsMenu;

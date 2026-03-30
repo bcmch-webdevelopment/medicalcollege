@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+import Library from "./pages/Library"; 
+import Committes from "./components/Committees"
 // Pages
 import Home from './pages/Home';
 import VirtualTour from './pages/VirtualTour';
@@ -18,6 +20,8 @@ import PrincipalMessage from './pages/PrincipalMessage';
 import Infrastructure from './pages/Infrastructure';
 // import CitizenCharter from './pages/CitizenCharter';
 // import Contact from './pages/Contact';
+
+
 
 // Academics page
 import Academics from './components/Academics'
@@ -72,8 +76,13 @@ function App() {
         {/* <Route path="/citizen-charter" element={<CitizenCharter />} /> */}
         {/* <Route path="/contact" element={<Contact />} /> */}
 
+        
+        
+
         {/* Academics*/}
            <Route path="/academics" element={<Academics />} />
+           <Route path="/library" element={<Library />} />
+           <Route path="/committees" element={<Committes />} />
         {/* Pre-Clinic */}
         <Route path="/pre-clinic" element={<PreClinic />} />
         <Route path="/anatomy" element={<Anatomy />} />

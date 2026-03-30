@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/bcmch-logo.png";
 
@@ -6,14 +6,23 @@ import logo from "../img/bcmch-logo.png";
 import AboutUs from "../components/Aboutus";
 import Academics from "../components/Academics";
 import Accrediation from "../components/Accrediation";
+import NMCMenu from "./NMCMenu";
+import NewsMenu from "./News&Events";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // ✅ Common Nav Style (VERY IMPORTANT)
-  const navItem =
-    "px-3 py-2 uppercase text-sm font-semibold text-gray-700 hover:text-red-700 transition flex items-center";
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const aboutLinks = [
     { name: "History & Values", path: "/history" },
@@ -28,70 +37,69 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full font-sans shadow-md">
-      
-      {/* Top Bar */}
-      <div className="bg-red-700 text-white text-xs md:text-sm py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="flex space-x-4 mb-2 md:mb-0">
+    <header
+      className={`sticky top-0 z-50 w-full bg-white font-sans transition-all duration-300 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
+      {/* 🔴 Top Bar */}
+      <div className="bg-red-700 text-white text-xs md:text-sm py-2">
+        <div className="max-w-[1200px] mx-auto px-3 flex flex-col md:flex-row justify-between items-center gap-2">
+
+          <div className="flex flex-wrap gap-2">
             <a href="#" className="hover:text-red-200">NMC Proforma BCMCH - 2025-2026</a>
             <span className="hidden md:inline">|</span>
             <a href="#" className="hover:text-red-200">Believers Medical Journal</a>
             <span className="hidden md:inline">|</span>
             <a href="#" className="hover:text-red-200">Gallery</a>
           </div>
-          <div className="flex space-x-4 items-center">
+
+          <div className="flex flex-wrap gap-2">
             <span>Toll Free: 1800 425 3010</span>
             <span className="hidden md:inline">|</span>
             <span>Anti-Ragging: 1800-180-5522</span>
           </div>
+
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          
-          {/* Logo */}
-          <div className="flex items-center">
-            <div className="w-64 h-20 md:w-80 md:h-24 flex items-center">
-              <img
-                src={logo}
-                alt="BCMCH Logo"
-                className="h-full w-auto object-contain"
-              />
-            </div>
+      {/* ⚪ Main Navigation */}
+      <div className="border-b border-gray-200">
+        <div className="max-w-[1200px] mx-auto pl-1 pr-3 py-3 flex items-center justify-between">
+
+          {/* ✅ Logo (shifted left) */}
+          <div className="flex items-center flex-shrink-0 -ml-2">
+            <img
+              src={logo}
+              alt="BCMCH Logo"
+              className={`w-auto object-contain transition-all duration-300 ${
+                isScrolled ? "h-10" : "h-14 md:h-16"
+              }`}
+            />
           </div>
 
-          {/* Desktop Nav */}
+          {/* ✅ Desktop Menu */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-semibold text-gray-700">
 
-            <Link to="/" className={navItem}>Home</Link>
+            <Link to="/" className="hover:text-red-700">HOME</Link>
 
-            {/* About */}
             <AboutUs />
-
-            <Link to="/admission" className={navItem}>Admission</Link>
-
-            {/* Academics */}
+            <Link to="/admission" className="hover:text-red-700">ADMISSION</Link>
             <Academics />
-
-            {/* Accreditation */}
             <Accrediation />
-
-            <Link to="/nmc" className={navItem}>NMC</Link>
-            <Link to="/library" className={navItem}>Library</Link>
-            <Link to="/news" className={navItem}>News & Events</Link>
-            <Link to="/committees" className={navItem}>Committees</Link>
+            <NMCMenu />
+            <Link to="/library" className="hover:text-red-700">LIBRARY</Link>
+            <NewsMenu />
+            <Link to="/committees" className="hover:text-red-700">COMMITTEES</Link>
 
           </nav>
 
-          {/* Mobile Button */}
+          {/* 📱 Mobile Menu Button */}
           <button
             className="lg:hidden text-red-700"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M6 18L18 6M6 6l12 12" />
@@ -101,17 +109,18 @@ const Header = () => {
               )}
             </svg>
           </button>
+
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* 📱 Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-b">
-          <nav className="flex flex-col px-4 pt-2 pb-4 space-y-2 text-sm font-semibold text-gray-700">
+          <nav className="flex flex-col px-4 py-3 space-y-2 text-sm font-semibold text-gray-700">
 
             <Link to="/" onClick={() => setIsMenuOpen(false)}>HOME</Link>
 
-            {/* Mobile About */}
+            {/* About Dropdown */}
             <div>
               <button
                 className="w-full flex justify-between py-2 uppercase"

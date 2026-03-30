@@ -6,3 +6,15 @@
 
 /* Tailwind utilities */
 @tailwind utilities;
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Optional: smoother layout */
+* {
+  box-sizing: border-box;
+}

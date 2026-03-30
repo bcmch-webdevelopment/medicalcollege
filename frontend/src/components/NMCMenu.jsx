@@ -2,41 +2,51 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
-const AboutUsMenu = () => {
+const NMCMenu = () => {
   const [open, setOpen] = useState(false);
   const [submenu, setSubmenu] = useState("");
   const navigate = useNavigate();
 
-  //  About Us Menu Data
+  // ✅ NMC Menu Data
   const menuData = [
     {
-      title: "About College",
-      key: "about-college",
+      title: "NMC Inspection Data",
+      path: "/nmc/inspection-data",
+    },
+    {
+      title: "NMC Information",
+      key: "nmc-info",
       children: [
-        { label: "History", path: "/history" },
-        { label: "Vision & Mission", path: "/about/vision-mission" },
+        { label: "Principal and Medical Superintendent", path: "/nmc/principal-medical-superintendent" },
+        { label: "Teaching and Non-Teaching", path: "/nmc/teaching-non-teaching" },
+        { label: "Affiliation", path: "/nmc/affiliation" },
+        { label: "Fee Details", path: "/nmc/fee-details" },
+        { label: "Students Admitted", path: "/nmc/students-admitted" },
+        { label: "Exam Result", path: "/nmc/exam-result" },
+        { label: "Anti Ragging", path: "/nmc/anti-ragging" },
+        { label: "Gender Harassment", path: "/nmc/gender-harassment" },
+        { label: "Anti Ragging Toll Free", path: "/nmc/anti-ragging-toll-free" },
+        { label: "Status of Recognition", path: "/nmc/status-recognition" },
+        { label: "Research Publications Yearly", path: "/nmc/research-publications" },
+        { label: "Clinical Material", path: "/nmc/clinical-material" },
+        { label: "College Council", path: "/nmc/college-council" },
       ],
     },
     {
-      title: "Administration",
-      key: "administration",
-      children: [
-        { label: "Metropolitan Message", path: "/about/metropolitan-message" },
-        { label: "Principal Message", path: "/about/principal-message" },
-        { label: "Admin Team", path: "/about/admin-team" },
-      ],
+      title: "NMC Biometric Attandance",
+      path: "/inspection-data",
     },
     {
-      title: "Infrastructure",
-      path: "/about/infrastructure",
+      title: "Anti Ragging",
+      path: "/inspection-data",
     },
     {
-      title: "Affiliation & Recognition",
-      path: "/about/affiliation",
+      title: "Stipend Details",
+      path: "/inspection-data",
     },
     {
-      title: "Hospital",
-      path: "/about/hospital",
+      title: "Village Adoption Details",
+      path: "/inspection-data",
     },
   ];
 
@@ -51,7 +61,7 @@ const AboutUsMenu = () => {
     >
       {/* Main Button */}
       <button className="px-4 py-2 uppercase hover:text-red-700">
-        About Us
+        NMC
       </button>
 
       {/* Dropdown */}
@@ -60,7 +70,7 @@ const AboutUsMenu = () => {
 
           {menuData.map((item, index) => (
             <div key={index}>
-              
+
               {/* With Submenu */}
               {item.children ? (
                 <div
@@ -75,7 +85,7 @@ const AboutUsMenu = () => {
 
                   {/* Submenu */}
                   {submenu === item.key && (
-                    <div className="absolute top-0 left-full bg-white shadow-lg w-56 border">
+                    <div className="absolute top-0 left-full bg-white shadow-lg w-72 border">
                       {item.children.map((sub, i) => (
                         <div
                           key={i}
@@ -107,4 +117,4 @@ const AboutUsMenu = () => {
   );
 };
 
-export default AboutUsMenu;
+export default NMCMenu;

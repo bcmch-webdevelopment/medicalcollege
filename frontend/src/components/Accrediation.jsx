@@ -7,7 +7,7 @@ const AccreditationMenu = () => {
   const [submenu, setSubmenu] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Hardcoded Menu Data
+  //  Menu Data
   const menuData = [
     {
       title: "NAAC",
