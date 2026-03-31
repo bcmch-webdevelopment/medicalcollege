@@ -66,7 +66,7 @@ const NMCMenu = () => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute top-full left-0 bg-white shadow-lg w-64 z-50 border">
+        <div className="absolute top-full right-0 bg-white shadow-lg w-64 z-50 border">
 
           {menuData.map((item, index) => (
             <div key={index}>
@@ -80,7 +80,7 @@ const NMCMenu = () => {
                 >
                   <div className="flex justify-between items-center">
                     <span>{item.title}</span>
-                    <ChevronRight className="w-4 h-4 text-blue-600 group-hover:translate-x-1 transition" />
+                    <ChevronRight className="w-4 h-4 text-black-600 group-hover:translate-x-1 transition" />
                   </div>
 
                   {/* Submenu */}

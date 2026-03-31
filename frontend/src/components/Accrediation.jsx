@@ -70,7 +70,7 @@ const AccreditationMenu = () => {
                 >
                   <div className="flex justify-between items-center">
                     <span>{item.title}</span>
-                    <ChevronRight className="w-4 h-4 text-blue-600 group-hover:translate-x-1 transition" />
+                    <ChevronRight className="w-4 h-4 text-black-600 group-hover:translate-x-1 transition" />
                   </div>
 
                   {/* Submenu */}
