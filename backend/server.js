@@ -20,6 +20,7 @@ app.use(cors());
 // Mount routers
 app.use('/api/auth', require('./routes/authRoute'));
 app.use('/api/facilities', require('./routes/facilityRoute'));
+app.use('/api/aboutus', require('./routes/aboutUsRoute'));
 
 const PORT = process.env.PORT || 5000;
 

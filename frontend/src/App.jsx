@@ -62,8 +62,12 @@ import Department from './pages/Departments';
 // Admin Components
 import AdminLayout from './pages/Admin/AdminLayout';
 import AdminLogin from './pages/Admin/Login';
+import AdminRegister from './pages/Admin/Register';
 import Dashboard from './pages/Admin/Dashboard';
 import ManageFacilities from './pages/Admin/ManageFacilities';
+import ManageAboutUs from './pages/Admin/ManageAboutUs';
+
+import DynamicAboutUs from './pages/DynamicAboutUs';
 
 function App() {
   const location = useLocation();
@@ -78,6 +82,9 @@ function App() {
         <Route path="/virtual-tour" element={<VirtualTour />} />
 
         {/* About */}
+        <Route path="/about/:slug" element={<DynamicAboutUs />} />
+        
+        {/* Legacy About Pages - You can remove these later if fully migrating */}
         <Route path="/history" element={<History />} />
         <Route path="/vision-mission" element={<VisionMission />} />
         <Route path="/metropolitan" element={<MetropolitanMessage />} />
@@ -131,9 +138,11 @@ function App() {
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="facilities" element={<ManageFacilities />} />
+          <Route path="about-us" element={<ManageAboutUs />} />
           <Route path="banners" element={<div className="p-4 text-center">Banner Management Coming Soon...</div>} />
         </Route>
       </Routes>

@@ -35,6 +35,10 @@ const AdminLayout = () => {
             <Building className="h-5 w-5" />
             Facilities
           </Link>
+          <Link to="/admin/about-us" className="flex items-center gap-3 p-3 rounded hover:bg-slate-800 transition-colors">
+            <Settings className="h-5 w-5" />
+            About Us
+          </Link>
           <Link to="/admin/banners" className="flex items-center gap-3 p-3 rounded hover:bg-slate-800 transition-colors">
             <Image className="h-5 w-5" />
             Banners & Sliders
