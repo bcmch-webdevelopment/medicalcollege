@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Dashboard",
+    "path": "/admin",
+    "icon": "LayoutDashboard"
+  },
+  {
+    "title": "About Us",
+    "icon": "Info",
+    "path": "/admin/pages/about-us"
+  },
+  {
+    "title": "Academics",
+    "icon": "BookOpen",
+    "path": "/admin/pages/academics"
+  },
+  {
+    "title": "Facilities",
+    "icon": "Building",
+    "path": "/admin/pages/facilities"
+  },
+  {
+    "title": "Banners & Sliders",
+    "icon": "Image",
+    "path": "/admin/banners"
+  }
+]

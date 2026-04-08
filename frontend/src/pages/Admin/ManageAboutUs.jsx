@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Trash2, Plus, GripVertical } from 'lucide-react';
+import { Pencil, Trash2, Plus } from 'lucide-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const ManageAboutUs = () => {
   const [aboutUsList, setAboutUsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   
-  const initialFormState = { id: '', title: '', slug: '', content: '', order: 0, sublists: [] };
+  const initialFormState = { id: '', title: '', slug: '', heading: '', content: '', imagePosition: 'left', parentId: 'none', order: 0 };
   const [currentAboutUs, setCurrentAboutUs] = useState(initialFormState);
 
   const token = localStorage.getItem('adminToken');
@@ -52,13 +54,25 @@ const ManageAboutUs = () => {
     const method = isEditing ? 'PUT' : 'POST';
 
     try {
+      const formData = new FormData();
+      formData.append('title', currentAboutUs.title);
+      formData.append('slug', currentAboutUs.slug);
+      formData.append('heading', currentAboutUs.heading || '');
+      formData.append('imagePosition', currentAboutUs.imagePosition || 'left');
+      formData.append('content', currentAboutUs.content || '');
+      formData.append('parentId', currentAboutUs.parentId || 'none');
+      formData.append('order', currentAboutUs.order);
+      
+      if (currentAboutUs.newImage) {
+        formData.append('image', currentAboutUs.newImage);
+      }
+
       const resp = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(currentAboutUs)
+        body: formData
       });
       
       if (!resp.ok) {
@@ -76,7 +90,10 @@ const ManageAboutUs = () => {
   };
 
   const openEditModal = (item) => {
-    setCurrentAboutUs(item);
+    setCurrentAboutUs({
+      ...item,
+      parentId: item.parentId || 'none'
+    });
     setShowModal(true);
   };
 
@@ -85,25 +102,23 @@ const ManageAboutUs = () => {
     setShowModal(true);
   };
 
-  const handleSublistChange = (index, field, value) => {
-    const updatedSublists = [...currentAboutUs.sublists];
-    updatedSublists[index][field] = value;
-    setCurrentAboutUs({ ...currentAboutUs, sublists: updatedSublists });
-  };
-
-  const addSublistItem = () => {
-    setCurrentAboutUs({
-      ...currentAboutUs,
-      sublists: [...currentAboutUs.sublists, { heading: '', text: '' }]
-    });
-  };
-
-  const removeSublistItem = (index) => {
-    const updatedSublists = currentAboutUs.sublists.filter((_, i) => i !== index);
-    setCurrentAboutUs({ ...currentAboutUs, sublists: updatedSublists });
+  const getParentTitle = (parentId) => {
+    if (!parentId || parentId === 'none') return "None (Root)";
+    const parent = aboutUsList.find(item => item._id === parentId);
+    return parent ? parent.title : "Unknown";
   };
 
   if (loading) return <p>Loading...</p>;
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ]
+  };
 
   return (
     <div>
@@ -123,7 +138,7 @@ const ManageAboutUs = () => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title / Slug</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sublists Count</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parent Page</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -136,7 +151,15 @@ const ManageAboutUs = () => {
                   <div className="text-sm text-gray-400">/{item.slug}</div>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {item.sublists?.length || 0} sublists
+                  {item.parentId ? (
+                    <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded inline-flex items-center">
+                      Child of: {getParentTitle(item.parentId)}
+                    </span>
+                  ) : (
+                    <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded inline-flex items-center">
+                      Root Page
+                    </span>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button onClick={() => openEditModal(item)} className="text-indigo-600 hover:text-indigo-900 mr-4">
@@ -157,16 +180,15 @@ const ManageAboutUs = () => {
         </table>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 border-b pb-2">{currentAboutUs._id ? 'Edit About Us Page' : 'Add New About Us Page'}</h2>
             
             <form onSubmit={handleSave}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Menu Title</label>
                   <input 
                     type="text" 
                     value={currentAboutUs.title}
@@ -189,77 +211,77 @@ const ManageAboutUs = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Display Order Mode</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Page Heading</label>
                   <input 
-                    type="number" 
-                    value={currentAboutUs.order}
-                    onChange={e => setCurrentAboutUs({...currentAboutUs, order: e.target.value})}
+                    type="text" 
+                    value={currentAboutUs.heading || ''}
+                    onChange={e => setCurrentAboutUs({...currentAboutUs, heading: e.target.value})}
                     className="w-full border rounded px-3 py-2"
-                    min="0"
                   />
                 </div>
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Main Content Description</label>
-                <textarea 
-                  value={currentAboutUs.content}
-                  onChange={e => setCurrentAboutUs({...currentAboutUs, content: e.target.value})}
-                  className="w-full border rounded px-3 py-2 h-24"
-                  placeholder="Introductory text describing this section..."
-                ></textarea>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Parent Page (Optional)</label>
+                  <select
+                    value={currentAboutUs.parentId || 'none'}
+                    onChange={e => setCurrentAboutUs({...currentAboutUs, parentId: e.target.value})}
+                    className="w-full border rounded px-3 py-2 bg-white"
+                  >
+                    <option value="none">None (Root Page)</option>
+                    {aboutUsList
+                      .filter(item => item._id !== currentAboutUs._id) 
+                      .filter(item => !item.parentId) 
+                      .map(item => (
+                      <option key={item._id} value={item._id}>{item.title}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               
-              <div className="mt-8 border-t pt-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-800">Sublists</h3>
-                  <button 
-                    type="button" 
-                    onClick={addSublistItem}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm flex items-center gap-1 border"
-                  >
-                    <Plus className="h-4 w-4" /> Add Sub-Section
-                  </button>
-                </div>
-                
-                {currentAboutUs.sublists.map((sub, index) => (
-                  <div key={index} className="bg-gray-50 border p-4 rounded mb-4 relative group">
-                    <button 
-                      type="button"
-                      onClick={() => removeSublistItem(index)}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 p-1"
-                      title="Remove sublist"
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                 <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
+                    <input 
+                      type="number" 
+                      value={currentAboutUs.order}
+                      onChange={e => setCurrentAboutUs({...currentAboutUs, order: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                      min="0"
+                    />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Image Upload</label>
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={e => setCurrentAboutUs({...currentAboutUs, newImage: e.target.files[0]})}
+                      className="w-full border rounded px-3 py-2 text-sm"
+                    />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Image Position</label>
+                    <select 
+                      value={currentAboutUs.imagePosition || 'left'}
+                      onChange={e => setCurrentAboutUs({...currentAboutUs, imagePosition: e.target.value})}
+                      className="w-full border rounded px-3 py-2 bg-white"
                     >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                    
-                    <div className="mb-3 pr-8">
-                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Sub-Heading</label>
-                      <input 
-                        type="text" 
-                        value={sub.heading}
-                        onChange={e => handleSublistChange(index, 'heading', e.target.value)}
-                        className="w-full border focus:ring focus:ring-red-100 rounded px-3 py-2 text-sm"
-                        placeholder="e.g. Our Core Values"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Sub-Content</label>
-                      <textarea 
-                        value={sub.text}
-                        onChange={e => handleSublistChange(index, 'text', e.target.value)}
-                        className="w-full border focus:ring focus:ring-red-100 rounded px-3 py-2 h-20 text-sm"
-                        placeholder="Enter description points..."
-                      ></textarea>
-                    </div>
-                  </div>
-                ))}
+                      <option value="left">Left (Image Left, Text Right)</option>
+                      <option value="right">Right (Text Left, Image Right)</option>
+                      <option value="top">Top (Banner Layout, Text Below)</option>
+                    </select>
+                 </div>
+              </div>
 
-                {currentAboutUs.sublists.length === 0 && (
-                  <div className="text-center text-sm text-gray-400 py-6 border-2 border-dashed bg-gray-50 rounded">
-                    No sublists added yet. Click "Add Sub-Section" to append entries.
-                  </div>
-                )}
+              <div className="mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Rich Text Content</label>
+                <div className="h-64 mb-12">
+                   <ReactQuill 
+                     theme="snow" 
+                     modules={modules}
+                     value={currentAboutUs.content || ''} 
+                     onChange={(val) => setCurrentAboutUs({...currentAboutUs, content: val})} 
+                     className="h-full"
+                   />
+                </div>
               </div>
               
               <div className="flex justify-end gap-3 mt-8 border-t pt-4 bg-white sticky bottom-0">

@@ -64,10 +64,9 @@ import AdminLayout from './pages/Admin/AdminLayout';
 import AdminLogin from './pages/Admin/Login';
 import AdminRegister from './pages/Admin/Register';
 import Dashboard from './pages/Admin/Dashboard';
-import ManageFacilities from './pages/Admin/ManageFacilities';
-import ManageAboutUs from './pages/Admin/ManageAboutUs';
+import ManagePages from './pages/Admin/ManagePages';
 
-import DynamicAboutUs from './pages/DynamicAboutUs';
+import DynamicPage from './pages/DynamicPage';
 
 function App() {
   const location = useLocation();
@@ -81,8 +80,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/virtual-tour" element={<VirtualTour />} />
 
-        {/* About */}
-        <Route path="/about/:slug" element={<DynamicAboutUs />} />
+        {/* Unified Dynamic Pages Route */}
+        <Route path="/:section/:slug" element={<DynamicPage />} />
         
         {/* Legacy About Pages - You can remove these later if fully migrating */}
         <Route path="/history" element={<History />} />
@@ -97,13 +96,10 @@ function App() {
         <Route path="/citizen-charter" element={<CitizenCharter />} />
         <Route path="/contact-us" element={<Contact />} />
 
-        
-        
-
         {/* Academics*/}
-           <Route path="/academics" element={<Academics />} />
            <Route path="/library" element={<Library />} />
            <Route path="/committees" element={<Committes />} />
+
         {/* Pre-Clinic */}
         <Route path="/pre-clinic" element={<PreClinic />} />
         <Route path="/anatomy" element={<Anatomy />} />
@@ -141,8 +137,7 @@ function App() {
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="facilities" element={<ManageFacilities />} />
-          <Route path="about-us" element={<ManageAboutUs />} />
+          <Route path="pages/:section" element={<ManagePages />} />
           <Route path="banners" element={<div className="p-4 text-center">Banner Management Coming Soon...</div>} />
         </Route>
       </Routes>

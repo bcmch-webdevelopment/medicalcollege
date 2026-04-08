@@ -30,6 +30,7 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
-    "lucide-react": "^1.7.0"
+    "lucide-react": "^1.7.0",
+    "react-quill": "^2.0.0"
   }
 }

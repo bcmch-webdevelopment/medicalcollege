@@ -30,19 +30,30 @@ exports.getAboutUsBySlug = async (req, res) => {
 // @access  Private
 exports.createAboutUs = async (req, res) => {
   try {
-    const { title, slug, content, sublists, order } = req.body;
+    let { title, slug, heading, imagePosition, content, parentId, order } = req.body;
     
+    // Process single image
+    let image = null;
+    if (req.file) {
+      image = `/uploads/${req.file.filename}`;
+    }
+
     // Check if slug exists
     const existing = await AboutUs.findOne({ slug });
     if (existing) {
       return res.status(400).json({ message: 'Section with this slug already exists' });
     }
 
+    const finalParentId = (parentId === 'none' || !parentId) ? null : parentId;
+
     const newAboutUs = new AboutUs({
       title,
       slug,
+      heading,
+      imagePosition,
       content,
-      sublists,
+      parentId: finalParentId,
+      image,
       order
     });
 
@@ -58,11 +69,20 @@ exports.createAboutUs = async (req, res) => {
 // @access  Private
 exports.updateAboutUs = async (req, res) => {
   try {
-    const { title, slug, content, sublists, order } = req.body;
+    let { title, slug, heading, imagePosition, content, parentId, order } = req.body;
     
+    const finalParentId = (parentId === 'none' || !parentId) ? null : parentId;
+
+    const updateData = { title, slug, heading, imagePosition, content, parentId: finalParentId, order };
+
+    // Process image if any new one is uploaded
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+
     const updatedAboutUs = await AboutUs.findByIdAndUpdate(
       req.params.id,
-      { title, slug, content, sublists, order },
+      updateData,
       { new: true, runValidators: true }
     );
 

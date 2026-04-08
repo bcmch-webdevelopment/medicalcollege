@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const AboutUsSchema = new mongoose.Schema({
+const PageSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -9,6 +9,11 @@ const AboutUsSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  section: {
+    type: String,
+    enum: ['about-us', 'academics', 'facilities'],
+    required: true,
   },
   heading: {
     type: String,
@@ -23,7 +28,7 @@ const AboutUsSchema = new mongoose.Schema({
   },
   parentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'AboutUs',
+    ref: 'Page',
     default: null
   },
   order: {
@@ -32,10 +37,7 @@ const AboutUsSchema = new mongoose.Schema({
   },
   image: {
     type: String
-  },
-  images: [{
-    type: String
-  }]
+  }
 }, { timestamps: true });
 
-module.exports = mongoose.model('AboutUs', AboutUsSchema);
+module.exports = mongoose.model('Page', PageSchema);

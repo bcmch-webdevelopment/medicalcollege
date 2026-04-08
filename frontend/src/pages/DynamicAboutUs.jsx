@@ -44,41 +44,63 @@ const DynamicAboutUs = () => {
     );
   }
 
+  // Backwards compatibility for images
+  const displayImage = data.image || (data.images && data.images.length > 0 ? data.images[0] : null);
+
+  // Determine layout classes based on imagePosition
+  const layoutClass = 
+    data.imagePosition === 'left' ? "flex flex-col lg:flex-row gap-10 items-start" :
+    data.imagePosition === 'right' ? "flex flex-col lg:flex-row-reverse gap-10 items-start" :
+    "flex flex-col gap-10 items-center"; // top
+
+  const imageContainerClass = 
+    data.imagePosition === 'top' ? "w-full overflow-hidden" : "w-full lg:w-5/12 overflow-hidden";
+
+  const contentContainerClass = 
+    data.imagePosition === 'top' ? "w-full" : "w-full lg:w-7/12";
+
   return (
     <div className="bg-gray-50 min-h-screen py-10 font-sans">
-      <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Main Content Header */}
-        <div className="bg-white rounded-xl shadow-md p-8 md:p-10 mb-8 border-t-[6px] border-red-700 transform transition hover:shadow-lg">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-800 mb-6 tracking-tight relative pb-4 
+        {/* Dynamic Layout Container */}
+        <div className="bg-white rounded-2xl shadow p-8 md:p-12 mb-8 border-t-[6px] border-red-700 hover:shadow-lg transition-shadow duration-300">
+          
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-800 mb-10 tracking-tight relative pb-4 
             after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-red-600">
             {data.title}
           </h1>
-          {data.content && (
-            <div className="prose max-w-none text-slate-600 leading-relaxed text-lg whitespace-pre-line font-medium">
-              {data.content}
-            </div>
-          )}
-        </div>
 
-        {/* Dynamic Sublists */}
-        {data.sublists && data.sublists.length > 0 && (
-          <div className="space-y-6">
-            {data.sublists.map((sub, index) => (
-              <div key={index} className="bg-white rounded-xl shadow p-6 md:p-8 hover:shadow-md transition duration-300 border border-gray-100">
-                <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4 flex items-start gap-3">
-                  <span className="bg-red-50 text-red-700 border border-red-100 w-10 h-10 flex shrink-0 justify-center items-center rounded-lg shadow-sm text-lg font-bold mt-[-4px]">
-                    {index + 1}
-                  </span>
-                  {sub.heading}
-                </h3>
-                <div className="text-slate-600 leading-relaxed whitespace-pre-line ml-0 md:ml-12 text-[1.05rem]">
-                  {sub.text}
-                </div>
-              </div>
-            ))}
+          <div className={layoutClass}>
+            
+            {displayImage && (
+               <div className={imageContainerClass}>
+                 <img 
+                   src={`http://localhost:5000${displayImage}`} 
+                   alt={data.heading || data.title} 
+                   className="w-full h-auto object-cover rounded-xl shadow-md border border-gray-100"
+                 />
+               </div>
+            )}
+
+            <div className={contentContainerClass}>
+              {data.heading && (
+                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 leading-tight">
+                   {data.heading}
+                 </h2>
+              )}
+              
+              {data.content && (
+                <div 
+                  className="prose prose-lg prose-red max-w-none text-slate-600 text-left prose-table:table-auto prose-table:w-full prose-td:border prose-td:border-gray-300 prose-th:border prose-th:bg-red-50 prose-td:p-3 prose-th:p-3"
+                  dangerouslySetInnerHTML={{ __html: data.content }} 
+                />
+              )}
+            </div>
+
           </div>
-        )}
+
+        </div>
 
       </div>
     </div>

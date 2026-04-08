@@ -1,17 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Pencil, Trash2, Plus } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Pencil, Trash2, Plus } from "lucide-react";
+
+const facilityTypes = [
+  "Library",
+  "Laboratory",
+  "Hostel",
+  "Transport",
+  "Cafeteria",
+  "Sports & Recreation",
+  "Auditorium",
+  "Medical Facilities",
+];
 
 const ManageFacilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [currentFacility, setCurrentFacility] = useState({ id: '', title: '', description: '', imageUrl: '', icon: '' });
+  const [currentFacility, setCurrentFacility] = useState({
+    id: "",
+    title: "",
+    description: "",
+    imageUrl: "",
+    category: "",
+  });
 
-  const token = localStorage.getItem('adminToken');
+  const token = localStorage.getItem("adminToken");
 
+  // Fetch Facilities
   const fetchFacilities = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/facilities');
+      const res = await fetch("http://localhost:5000/api/facilities");
       const data = await res.json();
       setFacilities(data);
       setLoading(false);
@@ -25,14 +43,15 @@ const ManageFacilities = () => {
     fetchFacilities();
   }, []);
 
+  // Delete
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this facility?')) {
+    if (window.confirm("Are you sure you want to delete this facility?")) {
       try {
         await fetch(`http://localhost:5000/api/facilities/${id}`, {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         fetchFacilities();
       } catch (err) {
@@ -41,38 +60,54 @@ const ManageFacilities = () => {
     }
   };
 
+  // Save (Add / Edit)
   const handleSave = async (e) => {
     e.preventDefault();
     const isEditing = !!currentFacility._id;
-    const url = isEditing 
-      ? `http://localhost:5000/api/facilities/${currentFacility._id}` 
-      : 'http://localhost:5000/api/facilities';
-    const method = isEditing ? 'PUT' : 'POST';
+
+    const url = isEditing
+      ? `http://localhost:5000/api/facilities/${currentFacility._id}`
+      : "http://localhost:5000/api/facilities";
+
+    const method = isEditing ? "PUT" : "POST";
 
     try {
       await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(currentFacility)
+        body: JSON.stringify(currentFacility),
       });
+
       setShowModal(false);
-      setCurrentFacility({ id: '', title: '', description: '', imageUrl: '', icon: '' });
+      resetForm();
       fetchFacilities();
     } catch (err) {
       console.error(err);
     }
   };
 
+  // Reset Form
+  const resetForm = () => {
+    setCurrentFacility({
+      id: "",
+      title: "",
+      description: "",
+      imageUrl: "",
+      category: "",
+    });
+  };
+
+  // Open Modals
   const openEditModal = (facility) => {
     setCurrentFacility(facility);
     setShowModal(true);
   };
 
   const openAddModal = () => {
-    setCurrentFacility({ id: '', title: '', description: '', imageUrl: '', icon: '' });
+    resetForm();
     setShowModal(true);
   };
 
@@ -80,9 +115,10 @@ const ManageFacilities = () => {
 
   return (
     <div>
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Manage Facilities</h1>
-        <button 
+        <button
           onClick={openAddModal}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2"
         >
@@ -90,39 +126,84 @@ const ManageFacilities = () => {
         </button>
       </div>
 
+      {/* Table */}
       <div className="bg-white rounded shadow overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Icon/Image</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase">
+                Image
+              </th>
+              <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase">
+                Title
+              </th>
+              <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase">
+                Category
+              </th>
+              <th className="px-6 py-3 text-left text-xs text-gray-500 uppercase">
+                Description
+              </th>
+              <th className="px-6 py-3 text-right text-xs text-gray-500 uppercase">
+                Actions
+              </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {facilities.map(facility => (
+
+          <tbody className="divide-y">
+            {facilities.map((facility) => (
               <tr key={facility._id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {facility.imageUrl ? <img src={facility.imageUrl} alt="" className="h-10 w-10 object-cover rounded" /> : <span className="text-gray-400">No Img</span>}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap font-medium">{facility.title}</td>
+                {/* Image */}
                 <td className="px-6 py-4">
-                  <p className="line-clamp-2 text-sm text-gray-500">{facility.description}</p>
+                  {facility.imageUrl ? (
+                    <img
+                      src={facility.imageUrl}
+                      alt=""
+                      className="h-10 w-10 rounded object-cover"
+                    />
+                  ) : (
+                    <span className="text-gray-400">No Img</span>
+                  )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={() => openEditModal(facility)} className="text-indigo-600 hover:text-indigo-900 mr-4">
+
+                {/* Title */}
+                <td className="px-6 py-4 font-medium">
+                  {facility.title}
+                </td>
+
+                {/* Category */}
+                <td className="px-6 py-4 text-sm text-gray-600">
+                  {facility.category}
+                </td>
+
+                {/* Description */}
+                <td className="px-6 py-4 text-sm text-gray-500 line-clamp-2">
+                  {facility.description}
+                </td>
+
+                {/* Actions */}
+                <td className="px-6 py-4 text-right">
+                  <button
+                    onClick={() => openEditModal(facility)}
+                    className="text-indigo-600 mr-4"
+                  >
                     <Pencil className="h-5 w-5" />
                   </button>
-                  <button onClick={() => handleDelete(facility._id)} className="text-red-600 hover:text-red-900">
+
+                  <button
+                    onClick={() => handleDelete(facility._id)}
+                    className="text-red-600"
+                  >
                     <Trash2 className="h-5 w-5" />
                   </button>
                 </td>
               </tr>
             ))}
+
             {facilities.length === 0 && (
               <tr>
-                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No facilities found. Add one to get started.</td>
+                <td colSpan="5" className="text-center py-4 text-gray-500">
+                  No facilities found. Add one to get started.
+                </td>
               </tr>
             )}
           </tbody>
@@ -131,52 +212,98 @@ const ManageFacilities = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg">
-            <h2 className="text-xl font-bold mb-4">{currentFacility._id ? 'Edit Facility' : 'Add New Facility'}</h2>
-            
+            <h2 className="text-xl font-bold mb-4">
+              {currentFacility._id ? "Edit Facility" : "Add Facility"}
+            </h2>
+
             <form onSubmit={handleSave}>
+              {/* Title */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input 
-                  type="text" 
+                <label className="block text-sm mb-1">Title</label>
+                <input
+                  type="text"
                   value={currentFacility.title}
-                  onChange={e => setCurrentFacility({...currentFacility, title: e.target.value})}
-                  className="w-full border rounded px-3 py-2"
+                  onChange={(e) =>
+                    setCurrentFacility({
+                      ...currentFacility,
+                      title: e.target.value,
+                    })
+                  }
+                  className="w-full border px-3 py-2 rounded"
                   required
                 />
               </div>
+
+              {/* Category */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea 
+                <label className="block text-sm mb-1">Category</label>
+                <select
+                  value={currentFacility.category}
+                  onChange={(e) =>
+                    setCurrentFacility({
+                      ...currentFacility,
+                      category: e.target.value,
+                    })
+                  }
+                  className="w-full border px-3 py-2 rounded"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {facilityTypes.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Description */}
+              <div className="mb-4">
+                <label className="block text-sm mb-1">Description</label>
+                <textarea
                   value={currentFacility.description}
-                  onChange={e => setCurrentFacility({...currentFacility, description: e.target.value})}
-                  className="w-full border rounded px-3 py-2 h-24"
+                  onChange={(e) =>
+                    setCurrentFacility({
+                      ...currentFacility,
+                      description: e.target.value,
+                    })
+                  }
+                  className="w-full border px-3 py-2 rounded h-24"
                   required
-                ></textarea>
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-                <input 
-                  type="text" 
-                  value={currentFacility.imageUrl || ''}
-                  onChange={e => setCurrentFacility({...currentFacility, imageUrl: e.target.value})}
-                  className="w-full border rounded px-3 py-2"
-                  placeholder="https://example.com/image.jpg"
                 />
               </div>
-              
-              <div className="flex justify-end gap-3 mt-6">
-                <button 
-                  type="button" 
+
+              {/* Image */}
+              <div className="mb-4">
+                <label className="block text-sm mb-1">Image URL</label>
+                <input
+                  type="text"
+                  value={currentFacility.imageUrl}
+                  onChange={(e) =>
+                    setCurrentFacility({
+                      ...currentFacility,
+                      imageUrl: e.target.value,
+                    })
+                  }
+                  className="w-full border px-3 py-2 rounded"
+                />
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-50"
+                  className="border px-4 py-2 rounded"
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded"
                 >
                   Save
                 </button>
