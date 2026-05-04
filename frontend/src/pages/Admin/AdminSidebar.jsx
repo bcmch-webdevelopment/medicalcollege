@@ -131,7 +131,7 @@ const AdminSidebar = ({ isMobileSidebarOpen, setIsMobileSidebarOpen, handleLogou
         
         <nav className="flex-1 overflow-y-auto p-4 space-y-1 custom-scrollbar">
           {adminMenu.map((item, index) => (
-            <MenuItem key={index} item={item} setIsMobileSidebarOpen={setIsMobileSidebarOpen} />
+            <MenuItem key={index} item={item} setIsMobileSidebarOpen ={setIsMobileSidebarOpen} />
           ))}
         </nav>
 

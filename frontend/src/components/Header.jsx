@@ -6,7 +6,6 @@ import logo from "../img/bcmch-logo.png";
 import NavDropdown from "./NavDropdown";
 import Accrediation from "../components/Accrediation";
 import NMCMenu from "./NMCMenu";
-import NewsMenu from "./News&Events";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,13 +95,13 @@ const Header = () => {
             <Link to="/" className="hover:text-red-700">HOME</Link>
 
             <NavDropdown title="About Us" section="about-us" />
-            <Link to="/admission" className="hover:text-red-700">ADMISSION</Link>
+            <Link to="/admissions" className="hover:text-red-700">ADMISSION</Link>
             <NavDropdown title="Academics" section="academics" />
             <NavDropdown title="Facilities" section="facilities" />
             <Accrediation />
             <NMCMenu />
             <Link to="/library" className="hover:text-red-700">LIBRARY</Link>
-            <NewsMenu />
+            <Link to="/news-and-events" className="hover:text-red-700">NEWS & EVENTS</Link>
             <Link to="/committees" className="hover:text-red-700">COMMITTEES</Link>
 
           </nav>
@@ -189,7 +188,7 @@ const Header = () => {
               );
             })}
 
-            <Link to="/admission" className="py-2" onClick={() => setIsMenuOpen(false)}>ADMISSION</Link>
+            <Link to="/admissions" className="py-2" onClick={() => setIsMenuOpen(false)}>ADMISSION</Link>
             <Link to="/accreditation" className="py-2" onClick={() => setIsMenuOpen(false)}>ACCREDITATION</Link>
             <Link to="/nmc" className="py-2" onClick={() => setIsMenuOpen(false)}>NMC</Link>
             <Link to="/library" className="py-2" onClick={() => setIsMenuOpen(false)}>LIBRARY</Link>

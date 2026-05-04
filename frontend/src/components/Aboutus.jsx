@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 const AboutUsMenu = () => {
   const [open, setOpen] = useState(false);
   const [menuData, setMenuData] = useState([]);
-  const [activeItem, setActiveItem] = useState(null); // for sublist hover
+  const [activeItem, setActiveItem] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {

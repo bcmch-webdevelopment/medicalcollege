@@ -28,6 +28,10 @@ app.use('/api/facilities', require('./routes/facilityRoute'));
 app.use('/api/aboutus', require('./routes/aboutUsRoute'));
 app.use('/api/academic', require('./routes/academicRoute'));
 app.use('/api/pages', require('./routes/pageRoute')); // unified dynamic pages
+app.use('/api/admissions', require('./routes/admissionRoute'));
+app.use('/api/news-events', require('./routes/newsEventRoute'));
+app.use('/api/student-list-uploads', require('./routes/studentListUploadRoute'));
+app.use('/api/departments', require('./routes/departmentRoute'));
 
 const PORT = process.env.PORT || 5000;
 

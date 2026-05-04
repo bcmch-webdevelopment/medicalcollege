@@ -5,6 +5,25 @@
     "icon": "LayoutDashboard"
   },
   {
+    "title": "Admissions",
+    "icon": "GraduationCap",
+    "children": [
+      {
+        "title": "Manage Programs",
+        "path": "/admin/admissions"
+      },
+      {
+        "title": "Student List Uploads",
+        "path": "/admin/admissions/uploads"
+      }
+    ]
+  },
+  {
+    "title": "Departments",
+    "icon": "Stethoscope",
+    "path": "/admin/departments"
+  },
+  {
     "title": "About Us",
     "icon": "Info",
     "path": "/admin/pages/about-us"
@@ -23,5 +42,10 @@
     "title": "Banners & Sliders",
     "icon": "Image",
     "path": "/admin/banners"
+  },
+  {
+    "title": "News & Events",
+    "path": "/admin/news-events",
+    "icon": "Megaphone"
   }
 ]

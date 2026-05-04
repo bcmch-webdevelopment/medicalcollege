@@ -10,6 +10,14 @@ import Committes from "./components/Committees"
 import Home from './pages/Home';
 import VirtualTour from './pages/VirtualTour';
 
+// Admissions Pages
+import AdmissionsLanding from './pages/Admissions/AdmissionsLanding';
+import DynamicAdmissionPage from './pages/Admissions/DynamicAdmissionPage';
+
+// News & Events Pages
+import NewsEventsListing from './pages/NewsEvents/NewsEventsListing';
+import NewsEventDetails from './pages/NewsEvents/NewsEventDetails';
+
 // About Us Pages
 import History from './pages/History';
 import VisionMission from './pages/VisionMission';
@@ -26,38 +34,12 @@ import Contact from './pages/ContactUs';
 
 
 
-// Academics page
-import Academics from './components/Academics'
-// Pre-Clinic
 import PreClinic from './pages/PreClinic';
-import Anatomy from './pages/Anesthesia';
-import Physiology from './pages/Physiology';
-import Biochemistry from './pages/BioChemistry';
-
-// Para-Clinic / Clinical Base
 import ParaClinic from './pages/ParaClinic';
 import Clinical from './pages/Clinic';
-import Pathology from './pages/Pathology';
-import Microbiology from './pages/Microbiology';
-import Pharmacology from './pages/Pharmacology';
-import ForensicMedicine from './pages/ForensicMedicine';
-
-// Clinical Departments
-import GeneralMedicine from './pages/GeneralMedicine';
-import GeneralSurgery from './pages/GeneralSurgery';
-import ObstetricsGynaecology from './pages/ObstetricsGynecology';
-import Orthopedics from './pages/Orthopedics';
-import Anesthesia from './pages/Anesthesia';
-import CommunityMedicine from './pages/CommunityMedicine';
-import Dentistry from './pages/Dentistry';
-import EmergencyMedicine from './pages/EmergencyMedicine';
-import Ophthalmology from './pages/Ophthalmology';
-import OtoRhinolaryngology from './pages/OtoRhinolaryngology';
-import Dermatology from './pages/Dermatology';
-import PMR from './pages/Pmr';
-import Pediatrics from './pages/Pediatrics';
 
 import Department from './pages/Departments';
+import DynamicDepartmentProfile from './pages/DynamicDepartmentProfile';
 
 // Admin Components
 import AdminLayout from './pages/Admin/AdminLayout';
@@ -65,6 +47,10 @@ import AdminLogin from './pages/Admin/Login';
 import AdminRegister from './pages/Admin/Register';
 import Dashboard from './pages/Admin/Dashboard';
 import ManagePages from './pages/Admin/ManagePages';
+import ManageAdmissions from './pages/Admin/ManageAdmissions';
+import ManageStudentListUploads from './pages/Admin/ManageStudentListUploads';
+import ManageNewsEvents from './pages/Admin/ManageNewsEvents';
+import ManageDepartments from './pages/Admin/ManageDepartments';
 
 import DynamicPage from './pages/DynamicPage';
 
@@ -79,6 +65,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/virtual-tour" element={<VirtualTour />} />
+
+        {/* Admission Routes */}
+        <Route path="/admissions" element={<AdmissionsLanding />} />
+        <Route path="/admissions/:slug" element={<DynamicAdmissionPage />} />
+
+        {/* News & Events Routes */}
+        <Route path="/news-and-events" element={<NewsEventsListing />} />
+        <Route path="/news-and-events/:slug" element={<NewsEventDetails />} />
 
         {/* Unified Dynamic Pages Route */}
         <Route path="/:section/:slug" element={<DynamicPage />} />
@@ -102,32 +96,15 @@ function App() {
 
         {/* Pre-Clinic */}
         <Route path="/pre-clinic" element={<PreClinic />} />
-        <Route path="/anatomy" element={<Anatomy />} />
-        <Route path="/physiology" element={<Physiology />} />
-        <Route path="/biochemistry" element={<Biochemistry />} />
 
         {/* Para-Clinic */}
         <Route path="/para-clinic" element={<ParaClinic />} />
-        <Route path="/pathology" element={<Pathology />} />
-        <Route path="/microbiology" element={<Microbiology />} />
-        <Route path="/pharmacology" element={<Pharmacology />} />
-        <Route path="/forensic-medicine" element={<ForensicMedicine />} />
 
         {/* Clinical */}
         <Route path="/clinical" element={<Clinical />} />
-        <Route path="/general-medicine" element={<GeneralMedicine />} />
-        <Route path="/general-surgery" element={<GeneralSurgery />} />
-        <Route path="/obstetrics-gynecology" element={<ObstetricsGynaecology />} />
-        <Route path="/orthopedics" element={<Orthopedics />} />
-        <Route path="/anaesthesiology" element={<Anesthesia />} />
-        <Route path="/community-medicine" element={<CommunityMedicine />} />
-        <Route path="/dentistry" element={<Dentistry />} />
-        <Route path="/emergency-medicine" element={<EmergencyMedicine />} />
-        <Route path="/ophthalmology" element={<Ophthalmology />} />
-        <Route path="/oto-rhinolaryngology" element={<OtoRhinolaryngology />} />
-        <Route path="/dermatology" element={<Dermatology />} />
-        <Route path="/pmr" element={<PMR />} />
-        <Route path="/pediatrics" element={<Pediatrics />} />
+
+        {/* Dynamic Department Profile */}
+        <Route path="/department/:slug" element={<DynamicDepartmentProfile />} />
 
         {/* Departments */}
         <Route path="/departments" element={<Department />} />
@@ -138,6 +115,10 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="pages/:section" element={<ManagePages />} />
+          <Route path="admissions" element={<ManageAdmissions />} />
+          <Route path="admissions/uploads" element={<ManageStudentListUploads />} />
+          <Route path="news-events" element={<ManageNewsEvents />} />
+          <Route path="departments" element={<ManageDepartments />} />
           <Route path="banners" element={<div className="p-4 text-center">Banner Management Coming Soon...</div>} />
         </Route>
       </Routes>

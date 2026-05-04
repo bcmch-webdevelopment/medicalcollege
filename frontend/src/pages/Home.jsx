@@ -117,7 +117,8 @@ const FacilityCard = ({ title, description, imagePaths }) => {
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
-   const navigate = useNavigate();   
+  const [featuredNews, setFeaturedNews] = useState([]);
+  const navigate = useNavigate();   
 
    
 
@@ -131,6 +132,20 @@ const Home = () => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev === 0 ? 1 : 0));
     }, 4000);
+
+    const fetchFeaturedNews = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/news-events?isFeatured=true&limit=4&status=published');
+        if (res.ok) {
+          const data = await res.json();
+          setFeaturedNews(data);
+        }
+      } catch (err) {
+        console.error('Error fetching featured news:', err);
+      }
+    };
+    fetchFeaturedNews();
+
     return () => clearInterval(timer);
   }, []);
 
@@ -164,7 +179,7 @@ const Home = () => {
           </div>
 
           <div className="flex justify-center flex-wrap gap-4 mt-8">
-            <button className="bg-[#b71a22] hover:bg-red-800 text-white font-bold py-3 px-8 rounded shadow-md transition transform hover:-translate-y-1">
+            <button onClick={() => navigate('/admissions')} className="bg-[#b71a22] hover:bg-red-800 text-white font-bold py-3 px-8 rounded shadow-md transition transform hover:-translate-y-1">
               Admissions
             </button>
             <Link
@@ -401,89 +416,77 @@ const Home = () => {
                 Stay updated with the latest happenings, academic announcements, and upcoming events at Believers Church Medical College.
               </p>
             </div>
-            <Link to="#" className="hidden md:inline-block text-[#b71a22] font-bold hover:underline mb-2">View All &rarr;</Link>
+            <Link to="/news-and-events" className="hidden md:inline-block text-[#b71a22] font-bold hover:underline mb-2">View All &rarr;</Link>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8">
              
              {/* Latest News Card (Left) */}
              <div className="w-full lg:w-7/12">
-                <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-[0_8px_30px_rgba(183,26,34,0.15)] transition duration-500">
-                   <div className="relative h-64 md:h-80 overflow-hidden">
-                      <img src={college1} alt="News Highlight" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                      <div className="absolute top-4 left-4 bg-[#b71a22] text-white text-xs font-bold uppercase tracking-widest py-1 px-3 rounded shadow-md">
-                        Latest News
-                      </div>
-                   </div>
-                   <div className="p-8">
-                      <div className="text-sm text-gray-500 font-semibold mb-3 flex items-center">
-                         <svg className="w-4 h-4 mr-2 text-[#b71a22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                         March 15, 2026
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-[#b71a22] transition-colors leading-tight">
-                        BCMCH Awarded Top Medical College for Clinical Excellence
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed mb-6">
-                        Believers Church Medical College Hospital has been recognized nationally for its outstanding contribution to clinical excellence, research, and holistic patient care methodologies introduced this year.
-                      </p>
-                      <Link to="#" className="text-[#b71a22] font-bold hover:underline">Read Full Story &rarr;</Link>
-                   </div>
-                </div>
+               {featuredNews.length > 0 ? (
+                 <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-[0_8px_30px_rgba(183,26,34,0.15)] transition duration-500 h-full flex flex-col">
+                    <div className="relative h-64 md:h-80 overflow-hidden bg-gray-200">
+                       {featuredNews[0].featuredImage ? (
+                         <img src={`http://localhost:5000${featuredNews[0].featuredImage}`} alt={featuredNews[0].title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                       ) : (
+                         <div className="flex items-center justify-center w-full h-full text-gray-400">No Image provided</div>
+                       )}
+                       <div className="absolute top-4 left-4 bg-[#b71a22] text-white text-xs font-bold uppercase tracking-widest py-1 px-3 rounded shadow-md">
+                         Latest {featuredNews[0].category}
+                       </div>
+                    </div>
+                    <div className="p-8 flex-grow flex flex-col">
+                       <div className="text-sm text-gray-500 font-semibold mb-3 flex items-center">
+                          <svg className="w-4 h-4 mr-2 text-[#b71a22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                          {new Date(featuredNews[0].publishDate).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                       </div>
+                       <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-[#b71a22] transition-colors leading-tight line-clamp-2">
+                         {featuredNews[0].title}
+                       </h3>
+                       <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                         {featuredNews[0].shortDescription}
+                       </p>
+                       <Link to={`/news-and-events/${featuredNews[0].slug}`} className="text-[#b71a22] font-bold hover:underline mt-auto inline-block w-max">Read Full Story &rarr;</Link>
+                    </div>
+                 </div>
+               ) : (
+                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 flex items-center justify-center h-full text-gray-500">
+                    No featured news at the moment.
+                 </div>
+               )}
              </div>
              
              {/* Upcoming Events List (Right) */}
              <div className="w-full lg:w-5/12 flex flex-col space-y-4">
                 
-                {/* Event 1 */}
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition duration-300 flex items-start group cursor-pointer">
-                   <div className="flex-shrink-0 bg-red-50 text-[#b71a22] rounded-xl text-center p-3 w-16 border border-red-100 group-hover:bg-[#b71a22] group-hover:text-white transition-colors">
-                      <span className="block text-xs font-bold uppercase tracking-wider">APR</span>
-                      <span className="block text-2xl font-extrabold leading-none mt-1">05</span>
-                   </div>
-                   <div className="ml-5">
-                      <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#b71a22] transition-colors mb-1">Annual Medical Symposium</h4>
-                      <p className="text-gray-500 text-sm mb-2 flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        09:00 AM - 04:00 PM
-                      </p>
-                      <p className="text-gray-600 text-sm line-clamp-2">Join leading healthcare professionals for a day of intensive clinical discussions and research presentations.</p>
-                   </div>
-                </div>
+                {featuredNews.slice(1).map(item => {
+                  const dateObj = new Date(item.publishDate);
+                  const month = dateObj.toLocaleString('default', { month: 'short' });
+                  const day = dateObj.getDate().toString().padStart(2, '0');
 
-                {/* Event 2 */}
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition duration-300 flex items-start group cursor-pointer">
-                   <div className="flex-shrink-0 bg-red-50 text-[#b71a22] rounded-xl text-center p-3 w-16 border border-red-100 group-hover:bg-[#b71a22] group-hover:text-white transition-colors">
-                      <span className="block text-xs font-bold uppercase tracking-wider">APR</span>
-                      <span className="block text-2xl font-extrabold leading-none mt-1">12</span>
-                   </div>
-                   <div className="ml-5">
-                      <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#b71a22] transition-colors mb-1">Blood Donation Drive</h4>
-                      <p className="text-gray-500 text-sm mb-2 flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        10:00 AM - 02:00 PM
-                      </p>
-                      <p className="text-gray-600 text-sm line-clamp-2">Contribute to the community health initiative coordinated by students and faculty at the main campus.</p>
-                   </div>
-                </div>
+                  return (
+                    <Link key={item._id} to={`/news-and-events/${item.slug}`} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition duration-300 flex items-start group cursor-pointer h-[130px]">
+                       <div className="flex-shrink-0 bg-red-50 text-[#b71a22] rounded-xl text-center p-3 w-16 border border-red-100 group-hover:bg-[#b71a22] group-hover:text-white transition-colors">
+                          <span className="block text-xs font-bold uppercase tracking-wider">{month}</span>
+                          <span className="block text-2xl font-extrabold leading-none mt-1">{day}</span>
+                       </div>
+                       <div className="ml-5 flex-grow overflow-hidden">
+                          <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#b71a22] transition-colors mb-1 line-clamp-1">{item.title}</h4>
+                          <span className={`${item.category === 'News' ? 'text-blue-600 bg-blue-50' : 'text-green-600 bg-green-50'} text-xs font-semibold px-2 py-0.5 rounded-full mb-1 inline-block`}>{item.category}</span>
+                          <p className="text-gray-600 text-sm line-clamp-2">{item.shortDescription}</p>
+                       </div>
+                    </Link>
+                  )
+                })}
 
-                {/* Event 3 */}
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition duration-300 flex items-start group cursor-pointer">
-                   <div className="flex-shrink-0 bg-red-50 text-[#b71a22] rounded-xl text-center p-3 w-16 border border-red-100 group-hover:bg-[#b71a22] group-hover:text-white transition-colors">
-                      <span className="block text-xs font-bold uppercase tracking-wider">MAY</span>
-                      <span className="block text-2xl font-extrabold leading-none mt-1">02</span>
+                {featuredNews.length <= 1 && (
+                   <div className="flex items-center justify-center text-gray-500 py-10 bg-gray-50 rounded-2xl border border-gray-100">
+                      More updates coming soon.
                    </div>
-                   <div className="ml-5">
-                      <h4 className="text-lg font-bold text-gray-800 group-hover:text-[#b71a22] transition-colors mb-1">Alumni Meet & Greet</h4>
-                      <p className="text-gray-500 text-sm mb-2 flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        06:00 PM - 09:00 PM
-                      </p>
-                      <p className="text-gray-600 text-sm line-clamp-2">A wonderful evening catching up with former graduates and celebrating collective milestones and journeys.</p>
-                   </div>
-                </div>
+                )}
                 
-                <Link to="#" className="mt-4 text-center bg-gray-50 text-[#b71a22] border border-gray-200 hover:bg-[#b71a22] hover:text-white font-bold py-3 px-6 rounded-xl transition duration-300 w-full">
-                   All Upcoming Events
+                <Link to="/news-and-events" className="mt-auto text-center bg-gray-50 text-[#b71a22] border border-gray-200 hover:bg-[#b71a22] hover:text-white font-bold py-3 px-6 rounded-xl transition duration-300 w-full">
+                   All Updates
                 </Link>
 
              </div>
@@ -491,7 +494,7 @@ const Home = () => {
           </div>
 
           <div className="mt-8 text-center md:hidden">
-            <Link to="#" className="text-[#b71a22] font-bold hover:underline">View All News &rarr;</Link>
+            <Link to="/news-and-events" className="text-[#b71a22] font-bold hover:underline">View All &rarr;</Link>
           </div>
 
         </div>
